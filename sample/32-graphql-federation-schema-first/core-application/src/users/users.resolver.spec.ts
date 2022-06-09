@@ -1,7 +1,14 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { Post } from 'src/posts/models/post.model';
 import { User } from './models/user.model';
 import { UsersResolver } from './users.resolver';
 import { UsersService } from './users.service';
+
+const mockPost: Post = {
+  authorId: 1,
+  id: 1,
+  title: 'Mock Post',
+};
 
 const usersServiceMock = {
   findById: jest.fn((id: number): User => {
@@ -35,5 +42,15 @@ describe('UsersResolver', () => {
   it('should resolve a reference', () => {
     const result = resolver.resolveReference({ __typename: 'User', id: 1 });
     expect(result.id).toEqual(1);
+  });
+
+  it('should resolve the user of a post', () => {
+    const result = resolver.user(mockPost);
+    expect(result).toEqual(
+      expect.objectContaining({
+        id: mockPost.authorId,
+        name: 'Mocked User'
+      }),
+    );
   });
 });

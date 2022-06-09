@@ -3,11 +3,9 @@ type Post @key(fields: "id") {
   title: String!
   body: String!
   authorId: Int!
-  user: User
 }
 
-extend type User @key(fields: "id") {
-  id: ID! @external
+extend type User {
   posts: [Post]
 }
 

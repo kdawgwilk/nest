@@ -3,6 +3,10 @@ type User @key(fields: "id") {
   name: String!
 }
 
+extend type Post {
+  user: User
+}
+
 extend type Query {
   getUser(id: ID!): User
 }

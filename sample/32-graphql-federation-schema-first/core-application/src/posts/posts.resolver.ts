@@ -1,3 +1,4 @@
+import { Injectable } from '@nestjs/common';
 import {
   Args,
   ID,
@@ -6,25 +7,21 @@ import {
   ResolveField,
   Resolver,
 } from '@nestjs/graphql';
-import { Post } from './posts.interfaces';
+import { User } from './models/user.model';
 import { PostsService } from './posts.service';
 
-@Resolver('Post')
+@Injectable()
 export class PostsResolver {
   constructor(private readonly postsService: PostsService) {}
 
-  @Query('findPost')
-  findPost(@Args({ name: 'id', type: () => ID }) id: number) {
-    return this.postsService.findOne(id);
+  @Resolver('User')
+  @ResolveField('posts')
+  public posts(@Parent() user: User) {
+    return this.postsService.findAllByAuthorId(user.id);
   }
 
   @Query('getPosts')
   getPosts() {
     return this.postsService.findAll();
-  }
-
-  @ResolveField('user')
-  user(@Parent() post: Post): any {
-    return { __typename: 'User', id: post.authorId };
   }
 }

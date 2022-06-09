@@ -7,15 +7,11 @@ A simple example of GraphQL Federation using Schema First approach.
 Make sure to start the two sub-graph applications first, then the gatway. Otherwise the gateway won't be able to fetch schemas from the sub-graphs.
 
 ```sh
-cd users-application && npm run start
+cd core-application && npm install && npm run start
 ```
 
 ```sh
-cd posts-application && npm run start
-```
-
-```sh
-cd gateway && npm run start
+cd gateway && npm install && npm run start
 ```
 
 ## Access the graph
@@ -30,9 +26,12 @@ query getUserWithPosts($userId: ID!) {
     id
     name
     posts {
-      authorId
       id
       title
+      user {
+        id
+        name
+      }
     }
   }
 }

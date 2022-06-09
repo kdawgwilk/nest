@@ -12,8 +12,7 @@ import { AppService } from './app.service';
       gateway: {
         supergraphSdl: new IntrospectAndCompose({
           subgraphs: [
-            { name: 'users', url: 'http://localhost:3000/graphql' },
-            { name: 'posts', url: 'http://localhost:3001/graphql' },
+            { name: 'core', url: 'http://localhost:3000/graphql' },
           ],
         }),
       },
